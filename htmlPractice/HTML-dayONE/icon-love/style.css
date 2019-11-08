@@ -1,0 +1,75 @@
+.main{
+  position: absolute;
+  margin:0 auto;
+  top: 20vh;
+  width: 5vh;
+  height: 5vh;
+  animation: xt 1s linear infinite;
+}
+.disc1{
+  position: absolute;
+  background-color: #5edfff;
+  border-radius: 1.5vh;
+  width: 3vh;
+  height: 3vh;
+}
+.disc2{
+    left: 2vh;
+    position: absolute;
+    background-color: #5edfff;
+    border-radius: 1.5vh;
+    width: 3vh;
+    height: 3vh;
+}
+.square{
+  position: absolute;
+  background-color: #5edfff;
+  width:3.05vh;
+  height:3.05vh;
+  transform: translate(1vh,1vh) rotate(45deg);
+}
+
+.disc12{
+  top:0.25vh;
+  left:0.25vh;
+  position: absolute;
+  background-color: white;
+  border-radius: 1.25vh;
+  width: 2.5vh;
+  height: 2.5vh;
+}
+.disc23{
+    right:0.25vh;
+    top:0.25vh;
+    position: absolute;
+    background-color: white;
+    border-radius: 1.25vh;
+    width: 2.50vh;
+    height: 2.50vh;
+}
+.square1{
+  position: absolute;
+  background-color: white;
+  width:2.50vh;
+  height:2.50vh;
+  left:1.25vh;
+  top:1.25vh;
+  transform: rotate(45deg);
+}
+@keyfrasmes xt{
+  0%{
+    transform: scale(1);
+  }
+  25%{
+    transform: scale(0.5);
+  }
+  50%{
+    transform: scale(0);
+  }
+  75%{
+    transform:scale(0.5);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
