@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .red {
+            color: red;
+        }
+
+        .big {
+            font-size: 5vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="debouncedDemo">
+        <p>Input your question</p>
+        <input v-model="question">
+        <p>{{answer}}</p>
+    </div>
+    <div id="bindTest">
+        <p :class="[{red: isred},c2]">77777</p>
+        <p :style="[color,fontSize]">6666</p>
+    </div>
+    <div id="setDemo" @click="add">
+        <p v-for="(value,name) in person">
+            {{name}}:{{value}}
+        </p>
+        <p v-for="number in Mult(numbers)">
+            {{number}}
+        </p>
+    </div>
+    <script>
+        var setDemo = new Vue({
+            el: "#setDemo",
+            data: {
+                person: {
+                    name: "Alen"
+                },
+                numbers: [1, 2, 3, 4, 5]
+            },
+            methods: {
+                add: function () {
+                    Vue.set(setDemo.person, 'age', 28)
+                },
+                Mult: function (numbers) {
+                    numbers.forEach((element, index) => {
+                        element += 1;
+                        this.numbers[index] = element
+                    });
+                    return this.numbers
+                }
+            }
+        })
+        var bindTest = new Vue({
+            el: "#bindTest",
+            data: {
+                c1: 'red',
+                c2: 'big',
+                isred: true,
+                color: {
+                    color: 'red'
+                },
+                fontSize: {
+                    fontSize: '36px'
+                }
+            }
+        })
+        var vm = new Vue({
+            el: "#debouncedDemo",
+            data: {
+                question: '',
+                answer: "请先提问!"
+            },
+            watch: {
+                question: function () {
+                    this.answer = "waiting....."
+                    this.debouncedGetAnser()
+                },
+            },
+            created: function () {
+                this.debouncedGetAnser = _.debounce(this.getAnswer, 500)
+            },
+            methods: {
+                getAnswer: function () {
+                    if (this.question.indexOf('?') === -1) {
+                        this.answer = "记得输入问号"
+                        return;
+                    }
+                    this.answer = '思考.....'
+                    let vm = this
+                    axios.get('https://yesno.wtf/api')
+                        .then(function (response) {
+                            vm.answer = _.capitalize(response.data.answer)
+                        })
+                        .catch(function (error) {
+                            vm.answer = error;
+                        })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="componentDemo">
+        <ol>
+            <todo-item v-for="item in groceryList" :todo="item" :key="item.id"></todo-item>
+        </ol>
+    </div>
+    <div id="computedDemo">
+        <p>初始值：{{message}}</p>
+        <p>{{now}}</p>
+        <p>{{update()}}</p>
+        <p>{{date}}</p>
+    </div>
+</body>
+<script>
+    Vue.component('todo-item', {
+        props: ['todo'],
+        template: '<li>{{todo.text}}</li>'
+    })
+    var app = new Vue({
+        el: '#componentDemo',
+        data: {
+            groceryList: [
+                { id: 0, text: '蔬菜' },
+                { id: 1, text: '奶酪' },
+                { id: 2, text: 'whatever' }
+            ],
+        }
+    })
+    var vm = new Vue({
+        el: '#computedDemo',
+        data: {
+            message: "hello",
+            date: new Date().toLocaleString()
+        },
+        computed: {
+            changedmessage: function () {
+                return this.message.split('').reverse().join('')
+            },
+            now: function () {
+                return new Date().toLocaleString()
+            }
+        },
+        methods: {
+            update: function () {
+                return new Date().toLocaleString()
+            }
+        },
+        mounted: function () {
+            var _this = this; //声明一个变量指向vue实例this,保证作用域一致
+            this.timer = setInterval(function () {
+                _this.date = new Date().toLocaleString()
+            }, 1000);
+        },
+        beforeDestroy() {
+            if (this.timer) {
+                clearInterval(this.timer);
+            }
+
+        }
+    })
+</script>
+
+</html>

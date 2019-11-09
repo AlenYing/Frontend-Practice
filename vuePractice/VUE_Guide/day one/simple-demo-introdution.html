@@ -29,6 +29,10 @@
         <p v-for="msg in message">{{msg}}</p>
         <button @click="reverseMessage">反转消息</button>
     </div>
+    <div id="app5">
+        <p>{{message}}</p>
+        <input v-model="message">
+    </div>
     <script>
         var vm = new Vue({
             el: '#app',
@@ -60,8 +64,17 @@
             methods: {
                 reverseMessage: function () {
                     this.message.forEach((msg, index) => {
-                        this.$set(this.message, index, msg.split(' ').reverse().join(''))
-                    });// todo 实时更新
+                        console.log(this.message, msg)
+                        this.$set(this.message, index, msg.split('').reverse().join(''))
+                    });// split 分割字符串 reverse反转数组 join 从数组创建字符串
+                }
+            }
+        })
+        var app5 = new Vue({
+            el:'#app5',
+            data:()=>{
+                return {
+                    message:''
                 }
             }
         })
